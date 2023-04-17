@@ -24,6 +24,7 @@ function List(props) {
           <ListItem key={idx}>
             <Link to={`/post/${e.postNum}`}>
               <p className="title">{e.title}</p>
+              <p className="author">{e.author.displayName}</p>
               <p>{e.content}</p>
             </Link>
           </ListItem>

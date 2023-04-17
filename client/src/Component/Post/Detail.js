@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
@@ -8,6 +9,7 @@ function Detail() {
   let navigate = useNavigate();
   const [PostInfo, setPostInfo] = useState({});
   const [Flag, setFlag] = useState(false);
+  const user = useSelector((state) => state.user);
   useEffect(() => {
     let body = {
       postNum: params.postNum,
@@ -54,6 +56,7 @@ function Detail() {
         <>
           <Post>
             <h1>{PostInfo.title}</h1>
+            <h3>{PostInfo.author.displayName}</h3>
             {PostInfo.image ? (
               <img
                 src={`${PostInfo.image}`}
@@ -63,14 +66,16 @@ function Detail() {
             ) : null}
             <p>{PostInfo.content}</p>
           </Post>
-          <BtnDiv>
-            <Link to={`/edit/${PostInfo.postNum} `}>
-              <button className="edit">수정</button>
-            </Link>
-            <button className="delete" onClick={() => DeleteHandler()}>
-              삭제
-            </button>
-          </BtnDiv>
+          {user.uid === PostInfo.author.uid && (
+            <BtnDiv>
+              <Link to={`/edit/${PostInfo.postNum} `}>
+                <button className="edit">수정</button>
+              </Link>
+              <button className="delete" onClick={() => DeleteHandler()}>
+                삭제
+              </button>
+            </BtnDiv>
+          )}
         </>
       ) : (
         <SpinnerDiv>

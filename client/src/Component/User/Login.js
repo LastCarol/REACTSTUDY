@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginDiv from "../../Style/UserCSS";
-
+import { useSelector } from "react-redux";
 import firebase from "../../firebase";
 
 function Login() {
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [ErrorMsg, setErrorMsg] = useState("");
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
-  let navigate = useNavigate();
+  useEffect(() => {
+    if (user.accessToken) {
+      alert("로그인한 회원만 글을 작성할 수 있습니다.");
+      navigate("/login");
+    }
+  }, []);
+
   const SignInFunction = async (e) => {
     e.preventDefault();
     if (!(Email && password)) {
@@ -34,6 +42,7 @@ function Login() {
       setErrorMsg("");
     }, 5000);
   }, [ErrorMsg]);
+
   return (
     <LoginDiv>
       <form>
