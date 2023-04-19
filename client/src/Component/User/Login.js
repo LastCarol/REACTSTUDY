@@ -8,15 +8,9 @@ function Login() {
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [ErrorMsg, setErrorMsg] = useState("");
-  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user.accessToken) {
-      alert("로그인한 회원만 글을 작성할 수 있습니다.");
-      navigate("/login");
-    }
-  }, []);
+  const user = useSelector((state) => state.user);
 
   const SignInFunction = async (e) => {
     e.preventDefault();
@@ -42,6 +36,12 @@ function Login() {
       setErrorMsg("");
     }, 5000);
   }, [ErrorMsg]);
+
+  useEffect(() => {
+    if (user.accessToken) {
+      console.log(user.accessToken);
+    }
+  }, []);
 
   return (
     <LoginDiv>
