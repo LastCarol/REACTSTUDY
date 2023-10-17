@@ -30,5 +30,5 @@ function setUpload(bucket) {
   }).single("file");
   return upload;
 }
-
+// s3 연동 완료 
 module.exports = setUpload;
